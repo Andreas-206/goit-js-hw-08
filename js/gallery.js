@@ -64,66 +64,41 @@ const images = [
   },
 ];
 
+const galleryContainer = document.querySelector(".gallery");
 
-// const gallery = document.querySelector('.gallery');
-// const elements = images.reduce(
-//   (htmlTotal, image) =>
-//     htmlTotal +
-//     `<li class="gallery-item">
-//   <a class="gallery-link" href="${image.original}">
-//     <img
-//       class="gallery-image"
-//       src="${image.preview}"
-//       data-source="${image.original}"
-//       alt="${image.description}"
-//     />
-//   </a>
-// </li>`,
-//   '',
-// );
-// gallery.insertAdjacentHTML('afterbegin', elements);
-// gallery.addEventListener('click', event => {
-//   event.preventDefault();
-//   if (event.target.nodeName !== 'IMG') return;
-//   const htmlItem = `<div class = "mobil-window">
-//             <img src="${event.target.dataset.source}">
-//     </div>`;
-//   gallery.removeEventListener('click', event);
-//   const instance = basicLightbox.create(htmlItem, {
-//     onShow: instance => {
-//       gallery.addEventListener('click', event);
-//       event.preventDefault();
-//       console.log(`OPEN`);
-//     },
-//     onClose: instance => {
-//       gallery.removeEventListener(`click`, event), console.log('CLOSE');
-//       document.removeEventListener(`keydown`, event),
-//         console.log('CLOSE ESC keydown');
-//     },
-//   });
-//   instance.show(instance => console.log(' SHOW'));
-//   document.addEventListener('keydown', event => {
-//     if (event.code === 'Escape') {
-//       instance.close();
-//     }
-//   });
-// });
-// 9:34
-// Проще .наверно кусок кода: const instance = basicLightbox.create(htmlItem, {
-//     onShow: instance => {
-//       gallery.addEventListener('click', event);
-//       event.preventDefault();
-//       console.log(`OPEN`);
-//     },
-//     onClose: instance => {
-//       gallery.removeEventListener(`click`, event), console.log('CLOSE');
-//       document.removeEventListener(`keydown`, event),
-//         console.log('CLOSE ESC keydown');
-//     },
-//   });
-//   instance.show(instance => console.log(' SHOW'));
-//   document.addEventListener('keydown', event => {
-//     if (event.code === 'Escape') {
-//       instance.close();
-//     }
-//   });
+function createGalleryItem({ preview, original, description }) {
+  return `
+    <li class="gallery-item">
+      <a class="gallery-link" href="${original}">
+        <img class="gallery-image"
+        src="${preview}" 
+        data-source="${original}" 
+        alt="${description}">
+      </a>
+    </li>
+  `;
+}
+
+function onGalleryItemClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
+  const largeImageURL = event.target.dataset.source;
+  const instance = basicLightbox.create(
+    `<img src="${largeImageURL}" width="1112" height="640">`
+  );
+  instance.show();
+  document.addEventListener(
+    "keydown",
+    (e) => e.key === "Escape" && instance.close()
+  );
+}
+
+function renderGallery() {
+  const galleryItemsHTML = images.map(createGalleryItem).join("");
+  galleryContainer.innerHTML = galleryItemsHTML;
+  galleryContainer.addEventListener("click", onGalleryItemClick);
+}
+
+renderGallery();
