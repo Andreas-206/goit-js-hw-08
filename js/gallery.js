@@ -64,41 +64,35 @@ const images = [
   },
 ];
 
-const galleryContainer = document.querySelector(".gallery");
+const gallery = document.querySelector(".gallery");
 
 function createGalleryItem({ preview, original, description }) {
-  return `
-    <li class="gallery-item">
-      <a class="gallery-link" href="${original}">
-        <img class="gallery-image"
-        src="${preview}" 
-        data-source="${original}" 
-        alt="${description}">
-      </a>
-    </li>
-  `;
+  return `<li class="gallery-item">
+    <a class="gallery-link" href="${original}">
+    <img class="gallery-image"
+    src="${preview}" 
+    data-source="${original}" 
+    alt="${description}">
+    </a>
+    </li>`;
 }
 
-function onGalleryItemClick(event) {
+function onGalleryClick(event) {
   event.preventDefault();
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  const largeImageURL = event.target.dataset.source;
-  const instance = basicLightbox.create(
-    `<img src="${largeImageURL}" width="1112" height="640">`
-  );
-  instance.show();
-  document.addEventListener(
-    "keydown",
-    (e) => e.key === "Escape" && instance.close()
-  );
+  const url = event.target.dataset.source;
+  const modal = basicLightbox.create(`<img src="${url}" width="1112" height="640">`);
+
+  modal.show();
+  document.addEventListener("keydown", (elem) => elem.key === "Escape" && modal.close());
 }
 
-function renderGallery() {
+function newGallery() {
   const galleryItemsHTML = images.map(createGalleryItem).join("");
-  galleryContainer.innerHTML = galleryItemsHTML;
-  galleryContainer.addEventListener("click", onGalleryItemClick);
+  gallery.innerHTML = galleryItemsHTML;
+  gallery.addEventListener("click", onGalleryClick);
 }
 
-renderGallery();
+newGallery();
