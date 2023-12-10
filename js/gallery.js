@@ -83,7 +83,7 @@ function onGalleryClick(event) {
     return;
   }
   const url = event.target.dataset.source;
-  const modal = basicLightbox.create(`<img src="${url}" width="1112" height="640">`);
+  const modal = basicLightbox.create(`<img class="modal" src="${url}" width="1112" height="640">`);
 
   modal.show();
   document.addEventListener("keydown", (elem) => elem.key === "Escape" && modal.close());
