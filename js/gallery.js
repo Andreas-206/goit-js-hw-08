@@ -85,7 +85,7 @@ function onGalleryClick(event) {
   }
   const url = event.target.dataset.source;
   const modal = basicLightBox.create(
-    `<img class="modal" src="${url}" width="1112" height="640">`,
+    `<img class="modal" src="${url}">`,
     {
       onShow: () => {
         document.addEventListener("keydown", onKeyPress);
