@@ -67,13 +67,14 @@ const images = [
 const gallery = document.querySelector(".gallery");
 
 function createGalleryItem({ preview, original, description }) {
-  return `<li class="gallery-item">
-    <a class="gallery-link" href="${original}">
-    <img class="gallery-img"
-    src="${preview}" 
-    data-source="${original}" 
-    alt="${description}">
-    </a>
+  return `
+    <li class="gallery-item">
+      <a class="gallery-link" href="${original}">
+        <img class="gallery-img"
+          src="${preview}" 
+          data-source="${original}" 
+          alt="${description}">
+      </a>
     </li>`;
 }
 
