@@ -84,10 +84,25 @@ function onGalleryClick(event) {
     return;
   }
   const url = event.target.dataset.source;
-  const modal = basicLightbox.create(`<img class="modal" src="${url}" width="1112" height="640">`);
+  const modal = basicLightBox.create(
+    `<img class="modal-image" src="${url}" alt="Image">`,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", onKeyPress);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", onKeyPress);
+      },
+    }
+  );
 
   modal.show();
-  document.addEventListener("keydown", (elem) => elem.key === "Escape" && modal.close());
+
+  function onKeyPress(elem) {
+    if (elem.key === "Escape") {
+      modal.close();
+    }
+  }
 }
 
 function newGallery() {
