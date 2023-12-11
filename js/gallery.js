@@ -84,7 +84,7 @@ function onGalleryClick(event) {
     return;
   }
   const url = event.target.dataset.source;
-  const modal = basicLightBox.create(
+  const modal = basicLightbox.create(
     `<img class="modal" src="${url}">`,
     {
       onShow: () => {
